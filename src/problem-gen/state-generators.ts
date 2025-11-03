@@ -5,7 +5,7 @@ import { SectionTitles, throwNull } from "../common/utils.ts";
 export function generateSolutionFromScamper(src: string) {
   const { nodes: queue } = parseTemplateSolution(src);
 
-  // console.log(queue);
+ 
   const solutionMap = new Map<string, BlockData>();
 
   for (const node of queue) {
@@ -20,25 +20,36 @@ export function generateInitialStateFromSolution(
 ) {
   const blockMap = new Map<string, BlockData>();
 
+
   for (const [id, block] of solutionMap) {
-    const data = block;
-    if (block.parentId === SectionTitles.SolutionBox) {
-      data.parentId = SectionTitles.BlockLibrary;
-    }
+    const data = { ...block, parentId: SectionTitles.BlockLibrary };
     blockMap.set(id, data);
   }
 
-  for (const [, block] of blockMap) {
+  for (const [id, block] of blockMap) {
     if (block.type !== "BlockWithChildren") continue;
-    for (const childSlot of block.children) {
-      if (childSlot.locked || !childSlot.id) continue;
-      const childData =
-        blockMap.get(childSlot.id) ??
-        throwNull("non-null slot id somehow points to non-existent block");
-      childData.parentId = SectionTitles.BlockLibrary;
-      childSlot.id = null;
-    }
+    const updatedChildren = block.children.map((childSlot) => {
+  
+      if (childSlot.id && !childSlot.locked) {
+        const childData = blockMap.get(childSlot.id);
+        if (childData) {
+          childData.parentId = SectionTitles.BlockLibrary;
+        }
+  
+        return { ...childSlot, id: null };
+      }
+      return childSlot;
+    });
+
+    const updatedBlock = { ...block, children: updatedChildren };
+    blockMap.set(id, updatedBlock);
   }
 
   return blockMap;
+}
+
+
+export function createParsonsBlocks(templateSolution: string) {
+
+  return generateInitialStateFromSolution(generateSolutionFromScamper(templateSolution));
 }

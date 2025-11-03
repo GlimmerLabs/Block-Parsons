@@ -13,13 +13,11 @@ function formatTime(ms: number) {
 export function ActionsMade() {
   const [count, setCount] = useState(0);
   const [timeTaken, setTimeTaken] = useState(0);
-  const [startTime, setStartTime] = useState<number | null>(null);
 
   const dispatch = useBlockDispatchContext();
 
   useEffect(() => {
     const start = Date.now();
-    setStartTime(start);
     const interval = setInterval(() => {
       setTimeTaken(Date.now() - start);
     }, 1000);

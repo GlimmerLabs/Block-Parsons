@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSC 151 - Computation via Expressions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/5.1.3/cosmo/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .interactive-exercise {
+            background-color: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .exercise-header {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 15px;
+            margin: -20px -20px 20px -20px;
+            border-radius: 6px 6px 0 0;
+            font-weight: bold;
+        }
+        .block-parsons-container {
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .instructions {
+            background-color: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .solution-hint {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Grinnell College Logo CSC 151 (Spring 2025)</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="#">Syllabus</a>
+                <a class="nav-link" href="#">Schedule</a>
+                <a class="nav-link" href="#">Eboards</a>
+                <a class="nav-link" href="#">LAs</a>
+                <a class="nav-link" href="#">MPs</a>
+                <a class="nav-link" href="#">Handouts</a>
+                <a class="nav-link" href="#">Reference</a>
+                <a class="nav-link" href="#">Teams</a>
+                <a class="nav-link" href="#">Gradescope</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h1>Computation via expressions</h1>
+        
+        <div class="alert alert-info">
+            <strong>Summary</strong><br>
+            In this reading, we develop a basic mental model of computation for Scheme programs.
+        </div>
+
+        <p>As we've learned (or may have learned), computer scientists not only write and analyze algorithms and data structures, they also translate these algorithms and data structures into program code that a computer can process. To express algorithms and data structures as programs, we use a <em>programming language</em>. We're using a variant of the programming language Scheme in this course.</p>
+
+        <p>Many people "learn" programming languages by trying a variety of ideas and building intuition. However, doing so can be dangerous. Unfortunately, our intuition may fail us. Hence, it becomes important to develop models of:</p>
+        <ol>
+            <li>The <em>structure</em> of the code we are writing and</li>
+            <li><em>How</em> the computer executes our programs.</li>
+        </ol>
+
+        <h2>Syntax and grammar</h2>
+        <p>Consider the following two sequences of English words:</p>
+        <ul>
+            <li>The rain in Spain falls mainly on the plains.</li>
+            <li>In on the the falls plains rain mainly Spain.</li>
+        </ul>
+        <p>Which of these sequences do you more easily understand? Why?</p>
+
+        <h2>The syntax of Scheme programs</h2>
+        <p>While the second sequence of words above was in random order, you may have been able to understand the meaning of the words to some degree. This is because you are equipped with all sorts of cues and heuristics for infusing such sequences with meaning. Unfortunately, as we saw during our first day of class, computers are not natively equipped with such skills.</p>
+
+        <div class="alert alert-warning">
+            <strong>Recall that:</strong> Computers will do <em>exactly</em> what you tell them to do and nothing more!
+        </div>
+
+        <h2>Expressions</h2>
+        <p>The main syntactic form of Scheme programs is the <em>expression</em>.</p>
+        
+        <div class="alert alert-light">
+            <strong>Definition (Expression):</strong> An <em>expression</em> is a program fragment that evaluates to a value.<br>
+            <strong>Definition (Value):</strong> A <em>value</em> is an expression that no longer takes steps of evaluation.
+        </div>
+
+        <p>You have encountered expressions before when studying elementary math: arithmetic features <em>numeric expressions</em> that evaluate to <em>numeric values</em>. For example:</p>
+        <ul>
+            <li>1 + 1 is a numeric expression that evaluates to the value 2.</li>
+            <li>3 × (5 − 2 + 1) is a numeric expression that evaluates to the value 12.</li>
+            <li>32 is a numeric expression that is, itself, a value.</li>
+        </ul>
+
+        <h3>Interactive Exercise: Building Scheme Expressions</h3>
+        
+        <div class="interactive-exercise">
+            <div class="exercise-header">
+                🧩 Block Parsons Exercise: Scheme Expression Construction
+            </div>
+            
+            <div class="instructions">
+                <h5>Instructions:</h5>
+                <p>Using the blocks below, construct a Scheme expression that computes the same value as the mathematical expression <strong>3 × (5 − 2 + 1)</strong>.</p>
+                <p>Drag blocks from the Block Library to the Solution Box to build your expression. Remember that Scheme uses prefix notation!</p>
+            </div>
+
+            <!-- This is where your Block Parsons tool would be embedded -->
+            <div class="block-parsons-container">
+                <div id="block-parsons-root">
+                    <!-- Your React app would render here -->
+                    <div style="text-align: center; padding: 40px; background: #f8f9fa; border: 2px dashed #ccc;">
+                        <h4>🔧 Block Parsons Interactive Tool</h4>
+                        <p>Pretend you see Parson's Problems</p>
+                        <p>The tool would show:</p>
+                        <ul style="text-align: left; display: inline-block;">
+                            <li>Block Library with available Scheme operations</li>
+                            <li>Solution Box for constructing expressions</li>
+                            <li>Drag-and-drop functionality</li>
+                            <li>Check/Reset buttons</li>
+                            <li>Attempt counter and timer</li>
+                        </ul>
+                        <div style="margin-top: 20px;">
+                            <button class="btn btn-primary" onclick="simulateCheck()">Check Solution</button>
+                            <button class="btn btn-secondary" onclick="simulateReset()">Reset</button>
+                        </div>
+                        <div style="margin-top: 15px;">
+                            <small>Attempts: <span id="attempts">0</span> | Time: <span id="time">00:00:00</span></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solution-hint">
+                <h5>💡 Hint:</h5>
+                <p>Remember that Scheme uses prefix notation, so the operator comes first. For the expression 3 × (5 − 2 + 1), you'll need:</p>
+                <ul>
+                    <li>A multiplication operation (*)</li>
+                    <li>The number 3</li>
+                    <li>An addition operation (+)</li>
+                    <li>A subtraction operation (-)</li>
+                    <li>The numbers 5, 2, and 1</li>
+                </ul>
+                <p>The correct Scheme expression should be: <code>(* 3 (+ (- 5 2) 1))</code></p>
+            </div>
+        </div>
+
+        <h2>Beyond arithmetic expressions</h2>
+        <p>Of course, our last reading quickly moved from arithmetic to drawings, so we need our rules for Scheme expressions to generalize accordingly. Let's look at one of these expressions from our previous reading:</p>
+        
+        <div class="alert alert-light">
+            <code>(solid-circle 60 "blue")</code>
+        </div>
+
+        <h3>Another Interactive Exercise</h3>
+        
+        <div class="interactive-exercise">
+            <div class="exercise-header">
+                🎨 Block Parsons Exercise: Drawing Expression
+            </div>
+            
+            <div class="instructions">
+                <h5>Instructions:</h5>
+                <p>Construct a Scheme expression that creates a blue circle with radius 60, then places it above a red rectangle that is 60 pixels wide and 40 pixels tall.</p>
+            </div>
+
+            <div class="block-parsons-container">
+                <div style="text-align: center; padding: 40px; background: #f8f9fa; border: 2px dashed #ccc;">
+                    <h4>🎨 Drawing Expression Builder</h4>
+                    <p>Another Block Parsons exercise would appear here...</p>
+                    <p>Students would drag blocks to create: <code>(above (solid-circle 60 "blue") (rectangle 60 40 "solid" "red"))</code></p>
+                </div>
+            </div>
+        </div>
+
+        <h2>A mental model of computation for Scheme expression</h2>
+        <p>It is one thing to form a syntactically valid English sentence. It is another thing to form a coherent, meaningful sentence! For example, the sentence:</p>
+        
+        <div class="alert alert-warning">
+            "I hefted the dishes below the hippo's qubits."
+        </div>
+        
+        <p>Is grammatically correct but non-sensible. For example, "hefting" (or lifting) dishes <em>below</em> something is odd. Furthermore, hippos don't have qubits to the best of our knowledge!</p>
+
+        <h2>Self-Checks</h2>
+        
+        <div class="interactive-exercise">
+            <div class="exercise-header">
+                📝 Self-Check 1: Syntax Analysis
+            </div>
+            
+            <div class="instructions">
+                <h5>Exercise:</h5>
+                <p>Consider the following expression that produces a drawing:</p>
+                <pre><code>(above (rectangle 60 40 "solid" "red")
+       (beside (rectangle 60 40 "solid" "blue")
+               (rectangle 60 40 "solid" "black")))</code></pre>
+                <p>Write down a list of:</p>
+                <ul>
+                    <li>All non-trivial sub-expressions of the overall expression.</li>
+                    <li>All the identifiers in the expression.</li>
+                    <li>All of the numbers in the expression.</li>
+                    <li>All of the strings in the expression.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="interactive-exercise">
+            <div class="exercise-header">
+                🔍 Self-Check 2: Step-by-Step Evaluation
+            </div>
+            
+            <div class="instructions">
+                <h5>Exercise:</h5>
+                <p>Write down the step-by-step evaluation of the following Scheme expression:</p>
+                <pre><code>(+ (- (* 3 5)
+      (/ 20 2))
+   (- (+ 2 8)
+      6))</code></pre>
+                <p>Your answer should begin something like the following:</p>
+                <pre><code>    (+ (- (* 3 5) (/ 20 2)) (- (+ 2 8) 6))
+--> (+ (- 15 (/ 20 2)) (- (+ 2 8) 6))</code></pre>
+            </div>
+        </div>
+
+        <hr>
+        <footer class="text-muted">
+            <p>Copyright © Eric Autry, Charlie Curtsinger, Sarah Dahlby Albright, Janet Davis, Nicole Eikmeier, Fahmida Hamid, Priscilla Jiménez, Barbara Johnson, Titus Klinge, Peter-Michael Osera, Leah Perlmutter, Samuel A. Rebelsky, John David Stone, Anya Vostinar, Henry Walker, and Jerod Weinman.</p>
+            <p>Unless specified otherwise elsewhere on this page, this work is licensed under a Creative Commons Attribution 3.0 Unported License.</p>
+        </footer>
+    </div>
+
+    <script>
+        let attempts = 0;
+        let startTime = Date.now();
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const hours = Math.floor(elapsed / (3600 * 1000));
+                const minutes = Math.floor((elapsed % (3600 * 1000)) / (60 * 1000));
+                const seconds = Math.floor((elapsed % (60 * 1000)) / 1000);
+                const pad = (n) => n.toString().padStart(2, "0");
+                document.getElementById('time').textContent = `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
+            }, 1000);
+        }
+
+        function simulateCheck() {
+            attempts++;
+            document.getElementById('attempts').textContent = attempts;
+            alert('Checking solution... (This would validate the student\'s Block Parsons construction)');
+        }
+
+        function simulateReset() {
+            attempts = 0;
+            startTime = Date.now();
+            document.getElementById('attempts').textContent = attempts;
+            document.getElementById('time').textContent = '00:00:00';
+            alert('Exercise reset! (This would clear the Block Parsons workspace)');
+        }
+
+        // Start timer when page loads
+        startTimer();
+    </script>
+</body>
+</html>

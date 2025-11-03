@@ -16,6 +16,10 @@ export type BlockDispatchType =
     }
   | {
       type: "RESET";
+    }
+  | {
+      type: "LOAD_PROBLEM";
+      payload: BlockContextType;
     };
 
 export const blockReducer: ImmerReducer<BlockContextType, BlockDispatchType> = (
@@ -31,6 +35,9 @@ export const blockReducer: ImmerReducer<BlockContextType, BlockDispatchType> = (
     }
     case "RESET": {
       return initialState;
+    }
+    case "LOAD_PROBLEM": {
+      return action.payload;
     }
   }
 };

@@ -1,18 +1,21 @@
 import { SectionTitles } from "../../utils.ts";
-
 import {
   generateInitialStateFromSolution,
   generateSolutionFromScamper,
 } from "../../../problem-gen/state-generators.ts";
 
-const solution = generateSolutionFromScamper("(- `2 (reduce `+ (list 4 5)))");
-const blocks = generateInitialStateFromSolution(solution);
+export function generateInitialStateFromTemplate(templateSolution: string) {
+  const solution = generateSolutionFromScamper(templateSolution);
+  const blocks = generateInitialStateFromSolution(solution);
 
-const solutionTopLevel = [...blocks.keys()].filter(
-  (key) => blocks.get(key)?.parentId === SectionTitles.SolutionBox,
-);
+  // All blocks should now be in BlockLibrary, with empty children slots
+  // This means there should be no top-level blocks in the solution box
+  const solutionTopLevel: string[] = [];
 
-export const initialState = {
-  blocks,
-  solutionTopLevel,
-};
+  return {
+    blocks,
+    solutionTopLevel,
+  };
+}
+
+export const initialState = generateInitialStateFromTemplate("(- `2 (reduce `+ (list 4 5)))");
