@@ -7,7 +7,7 @@ import {
   type BlockData,
   isBlockWithChildrenData,
 } from "../../../block-types.ts";
-import { ArgumentSlotPrefix } from "../../../../components/block/ArgumentSlot.tsx";
+import { ArgumentSlotPrefix } from "../../../../components/block/slot/ArgumentSlot.tsx";
 
 export function handleSetParent(
   draft: Draft<BlockContextType>,
