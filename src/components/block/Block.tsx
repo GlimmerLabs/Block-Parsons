@@ -4,7 +4,7 @@ import { throwNull } from "../../common/utils.ts";
 import { PresentationalArgumentSlot } from "./PresentationalArgumentSlot.tsx";
 import { useDndContext } from "@dnd-kit/core";
 import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
-import { isConstantBlock, type Slot } from "../../common/block-types.ts";
+import { isConstantBlockData, type Slot } from "../../common/block-types.ts";
 import { useCallback } from "react";
 
 export interface BlockProps {
@@ -31,7 +31,7 @@ export function Block({
       const childBlock =
         blocks.get(slotId) ??
         throwNull(`should have found block with id ${slotId}`);
-      if (isConstantBlock(childBlock)) {
+      if (isConstantBlockData(childBlock)) {
         return <Box color={"black"}>{childBlock.value}</Box>;
       }
       return <Block id={slotId} padding={0} presentational={presentational} />;
@@ -57,7 +57,7 @@ export function Block({
     [getLockedBlockElement, id, presentational],
   );
 
-  if (isConstantBlock(block)) {
+  if (isConstantBlockData(block)) {
     return (
       <Box
         bgcolor={"lightgreen"}

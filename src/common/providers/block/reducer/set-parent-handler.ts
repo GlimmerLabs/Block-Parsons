@@ -1,10 +1,13 @@
 import type { BlockContextType } from "../BlockContext.ts";
-import { ArgumentSlotPrefix } from "../../../../components/block/ArgumentSlot.tsx";
 import { SectionTitles, throwNull } from "../../../utils.ts";
 import type { Active, Over } from "@dnd-kit/core";
 import type { BlockDispatchType } from "./block-reducer.ts";
 import type { Draft } from "immer";
-import { type BlockData, isBlockWithChildren } from "../../../block-types.ts";
+import {
+  type BlockData,
+  isBlockWithChildrenData,
+} from "../../../block-types.ts";
+import { ArgumentSlotPrefix } from "../../../../components/block/ArgumentSlot.tsx";
 
 export function handleSetParent(
   draft: Draft<BlockContextType>,
@@ -58,7 +61,7 @@ export function handleSetParent(
   const slotIndex = Number(parsedSlotIndex);
   // check for invalid swap first
   const newParent = blocks.get(newParentId);
-  if (!newParent || !parsedSlotIndex || !isBlockWithChildren(newParent)) {
+  if (!newParent || !parsedSlotIndex || !isBlockWithChildrenData(newParent)) {
     throw new Error("new parent not found or has no children?");
   }
   const parentChildren = newParent.children;
@@ -101,7 +104,7 @@ function removeChildFromParent(
 ): number {
   const parentId = child.parentId;
   const parentData = blocks.get(parentId);
-  if (!parentData || !isBlockWithChildren(parentData)) {
+  if (!parentData || !isBlockWithChildrenData(parentData)) {
     // probably a top level block
     return -1;
   }

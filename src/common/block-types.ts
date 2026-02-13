@@ -5,30 +5,32 @@ export interface Slot {
 
 type BlockType = "ConstantBlock" | "BlockWithChildren";
 
-interface BaseBlock {
+interface BaseBlockData {
   type: BlockType;
   parentId: string;
 }
 
-interface ConstantBlock extends BaseBlock {
+interface ConstantBlockData extends BaseBlockData {
   type: "ConstantBlock";
   value: string;
 }
 
-interface BlockWithChildren extends BaseBlock {
+interface BlockWithChildrenData extends BaseBlockData {
   type: "BlockWithChildren";
   children: Slot[];
   expandable?: boolean;
 }
 
-export type BlockData = ConstantBlock | BlockWithChildren;
+export type BlockData = ConstantBlockData | BlockWithChildrenData;
 
-export function isConstantBlock(block: BlockData): block is ConstantBlock {
+export function isConstantBlockData(
+  block: BlockData,
+): block is ConstantBlockData {
   return block.type === "ConstantBlock";
 }
 
-export function isBlockWithChildren(
+export function isBlockWithChildrenData(
   block: BlockData,
-): block is BlockWithChildren {
+): block is BlockWithChildrenData {
   return block.type === "BlockWithChildren";
 }
