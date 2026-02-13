@@ -7,11 +7,23 @@ const ConstantBlockStyles = {
   fontFamily: "monospace",
 };
 
-type ConstantBlockProps = Pick<ConstantBlockData, "value">;
+export const ConstantBlockColors = {
+  Procedure: "lightblue",
+  Value: "lightgreen",
+} as const;
+type BlockColor =
+  (typeof ConstantBlockColors)[keyof typeof ConstantBlockColors];
 
-export function ConstantBlock({ value }: ConstantBlockProps) {
+type ConstantBlockProps = Pick<ConstantBlockData, "value"> & {
+  color?: BlockColor;
+};
+
+export function ConstantBlock({
+  value,
+  color = ConstantBlockColors.Value,
+}: ConstantBlockProps) {
   return (
-    <Box bgcolor={"lightgreen"} {...ConstantBlockStyles}>
+    <Box bgcolor={color} {...ConstantBlockStyles}>
       {value}
     </Box>
   );

@@ -9,17 +9,22 @@ import { ArgumentSlotStyles } from "./argument-slot-styles.ts";
 export interface ArgumentSlotProps {
   idSuffix: string;
   blockId?: string | null;
+  allowFirstClass?: boolean;
 }
 
 export const ArgumentSlotPrefix = "argument slot of ";
 
-export function ArgumentSlot({ idSuffix, blockId }: ArgumentSlotProps) {
+export function ArgumentSlot({
+  idSuffix,
+  blockId,
+  allowFirstClass = false,
+}: ArgumentSlotProps) {
   const { setNodeRef, isOver } = useDroppable({
     id: `${ArgumentSlotPrefix}${idSuffix}`,
   });
 
   const ChildBlock: ReactElement<BlockProps> | null = !blockId ? null : (
-    <Block id={blockId} />
+    <Block id={blockId} allowFirstClass={allowFirstClass} />
   );
   return (
     <Box

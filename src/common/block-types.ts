@@ -1,6 +1,7 @@
 export interface Slot {
   id: string | null;
   locked: boolean;
+  allowFirstClass: boolean;
 }
 
 type BlockType = "ConstantBlock" | "BlockWithChildren";
@@ -27,6 +28,20 @@ export function isConstantBlockData(
   block: BlockData,
 ): block is ConstantBlockData {
   return block.type === "ConstantBlock";
+}
+
+export function canBeFirstClass(
+  block: BlockData,
+): block is BlockWithChildrenData & {
+  children: [{ id: string }];
+} {
+  return (
+    isBlockWithChildrenData(block) &&
+    block.children.length > 0 &&
+    block.children.every(({ id }, index) =>
+      index === 0 ? id !== null : id === null,
+    )
+  );
 }
 
 export function isBlockWithChildrenData(

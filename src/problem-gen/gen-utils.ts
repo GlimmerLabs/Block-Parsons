@@ -29,7 +29,12 @@ export function turnIntoBlock(
       value: node.simplename,
       parentId: SectionTitles.SolutionBox,
     });
-    return { id: blockId, locked: !caretOperator };
+    return {
+      id: blockId,
+      locked: !caretOperator,
+      // TODO: should find better way, symbols aren't necessarily first-class functions
+      allowFirstClass: node.value.startsWith("Symbol"),
+    };
   }
 
   // otherwise it is an s-expression with optional children
@@ -65,6 +70,7 @@ export function turnIntoBlock(
     {
       id: firstBlockSlot.id,
       locked: firstBlockSlot.locked ? !caretOperator : caretOperator,
+      allowFirstClass: firstBlockSlot.allowFirstClass,
     },
   ];
   for (const child of node.children) {
@@ -79,7 +85,11 @@ export function turnIntoBlock(
     children: blockChildren,
   });
 
-  return { id: blockId, locked: !caretOperator };
+  return {
+    id: blockId,
+    locked: !caretOperator,
+    allowFirstClass: false,
+  };
 }
 
 const BacktickHandler: TokenHandler = {

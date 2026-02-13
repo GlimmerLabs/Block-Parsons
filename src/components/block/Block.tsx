@@ -4,20 +4,26 @@ import { throwNull } from "../../common/utils.ts";
 import { PresentationalArgumentSlot } from "./slot/PresentationalArgumentSlot.tsx";
 import { useDndContext } from "@dnd-kit/core";
 import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
-import { isConstantBlockData, type Slot } from "../../common/block-types.ts";
+import {
+  canBeFirstClass,
+  isConstantBlockData,
+  type Slot,
+} from "../../common/block-types.ts";
 import { useCallback } from "react";
-import { ConstantBlock } from "./ConstantBlock.tsx";
+import { ConstantBlock, ConstantBlockColors } from "./ConstantBlock.tsx";
 
 export interface BlockProps {
   id: string;
   presentational?: boolean;
   padding?: StackProps["padding"];
+  allowFirstClass?: boolean;
 }
 
 export function Block({
   id,
   presentational: presentationalProp,
   padding = "0.5em",
+  allowFirstClass = true,
 }: BlockProps) {
   const { blocks } = useBlockContext();
   const block =
@@ -48,7 +54,11 @@ export function Block({
       }
 
       const idSuffix = `:${id}:${index.toString()}`;
-      const propsToPass = { idSuffix, blockId: slotId };
+      const propsToPass = {
+        idSuffix,
+        blockId: slotId,
+        allowFirstClass: slot.allowFirstClass,
+      };
       return presentational ? (
         <PresentationalArgumentSlot {...propsToPass} />
       ) : (
@@ -59,6 +69,19 @@ export function Block({
   );
 
   if (isConstantBlockData(block)) return <ConstantBlock value={block.value} />;
+
+  if (allowFirstClass && canBeFirstClass(block)) {
+    const identifierBlock =
+      blocks.get(block.children[0].id) ??
+      throwNull("should have got function's first child");
+    if (isConstantBlockData(identifierBlock))
+      return (
+        <ConstantBlock
+          value={identifierBlock.value}
+          color={ConstantBlockColors.Procedure}
+        />
+      );
+  }
 
   const [firstChild, ...restChildren] = block.children;
   let firstSlot: Slot | null = firstChild;

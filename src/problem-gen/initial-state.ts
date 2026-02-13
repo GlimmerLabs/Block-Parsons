@@ -5,7 +5,7 @@ import {
   generateSolutionFromScamper,
 } from "./state-generators.ts";
 
-const solution = generateSolutionFromScamper("(- `2 (reduce `+ (list 4 5)))");
+const solution = generateSolutionFromScamper("^(reduce + (list 4 5))");
 const blocks = generateInitialStateFromSolution(solution);
 
 const solutionTopLevel = [...blocks.keys()].filter(
