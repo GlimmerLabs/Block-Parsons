@@ -3,7 +3,7 @@ import type { BlockContextType } from "../BlockContext.ts";
 import type { Draft } from "immer";
 import type { ImmerReducer } from "use-immer";
 import { handleSetParent } from "./set-parent-handler.ts";
-import { initialState } from "../initial-state.ts";
+import { initialState } from "../../../../problem-gen/initial-state.ts";
 
 export type BlockDispatchType =
   | {

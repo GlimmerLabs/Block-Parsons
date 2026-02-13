@@ -1,4 +1,4 @@
-import { Stack, Button, Typography } from "@mui/material";
+import { Button, Stack, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useBlockDispatchContext } from "../common/providers/block/BlockDispatchContext.ts";
 
@@ -10,16 +10,14 @@ function formatTime(ms: number) {
   return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
-export function ActionsMade() {
+export function Statistics() {
   const [count, setCount] = useState(0);
   const [timeTaken, setTimeTaken] = useState(0);
-  const [startTime, setStartTime] = useState<number | null>(null);
 
   const dispatch = useBlockDispatchContext();
 
   useEffect(() => {
     const start = Date.now();
-    setStartTime(start);
     const interval = setInterval(() => {
       setTimeTaken(Date.now() - start);
     }, 1000);

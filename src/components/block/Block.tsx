@@ -1,13 +1,10 @@
 import { Box, Stack, type StackProps } from "@mui/material";
 import { ArgumentSlot } from "./ArgumentSlot.tsx";
-import { throwNull } from "../common/utils.ts";
+import { throwNull } from "../../common/utils.ts";
 import { PresentationalArgumentSlot } from "./PresentationalArgumentSlot.tsx";
 import { useDndContext } from "@dnd-kit/core";
-import { useBlockContext } from "../common/providers/block/BlockContext.ts";
-import {
-  isConstantBlock,
-  type Slot,
-} from "../common/providers/block/block-types.ts";
+import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
+import { isConstantBlock, type Slot } from "../../common/block-types.ts";
 import { useCallback } from "react";
 
 export interface BlockProps {

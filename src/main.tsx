@@ -1,6 +1,6 @@
 import { createRoot } from "react-dom/client";
 import { throwNull } from "./common/utils.ts";
-import { App } from "./app/App.tsx";
+import { App } from "./components/App.tsx";
 import { enableMapSet } from "immer";
 
 enableMapSet();

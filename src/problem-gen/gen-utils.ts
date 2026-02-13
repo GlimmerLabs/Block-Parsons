@@ -5,7 +5,7 @@ import {
 } from "scamper/src/parser/parser.ts";
 import { AST, SyntaxNode } from "scamper/src/ast.ts";
 import { newUUID, SectionTitles, throwNull } from "../common/utils.ts";
-import type { BlockData, Slot } from "../common/providers/block/block-types.ts";
+import type { BlockData, Slot } from "../common/block-types.ts";
 import type { TokenHandler } from "scamper/src/parser/tokenhandler.ts";
 import { DefaultTokenHandlingSettings } from "scamper/src/parser/tokenhandler.ts";
 import {

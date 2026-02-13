@@ -1,4 +1,4 @@
-import { Block } from "../../../block/Block.tsx";
+import { Block } from "../../../components/block/Block.tsx";
 import { type PropsWithChildren, useCallback, useState } from "react";
 import {
   defaultKeyboardCoordinateGetter,
@@ -11,7 +11,7 @@ import {
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
-import { collisionDetection } from "../../../solution-box/solution-box-utils.ts";
+import { collisionDetection } from "../../../components/solution-box/solution-box-utils.ts";
 import { useBlockDispatchContext } from "../block/BlockDispatchContext.ts";
 
 export function DndProvider({ children }: PropsWithChildren) {

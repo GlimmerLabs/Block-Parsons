@@ -2,7 +2,7 @@ import { BlockLabels } from "./aria-labels.ts";
 import { Box } from "@mui/material";
 import { Block, type BlockProps } from "./Block.tsx";
 import { useDroppable } from "@dnd-kit/core";
-import { Draggable } from "../common/dnd-wrappers/Draggable.tsx";
+import { Draggable } from "../../common/dnd-wrappers/Draggable.tsx";
 import type { ReactElement } from "react";
 import { ArgumentSlotStyles } from "./argument-slot-styles.ts";
 
