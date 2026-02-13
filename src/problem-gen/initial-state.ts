@@ -6,6 +6,7 @@ import {
 } from "./state-generators.ts";
 
 const solution = generateSolutionFromScamper("^(reduce + (list 4 5))");
+export const solutionBlocks = structuredClone(solution);
 const blocks = generateInitialStateFromSolution(solution);
 
 const solutionTopLevel = [...blocks.keys()].filter(
@@ -15,4 +16,5 @@ const solutionTopLevel = [...blocks.keys()].filter(
 export const initialState = {
   blocks,
   solutionTopLevel,
+  solutionIsCorrect: false,
 };
