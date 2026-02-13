@@ -16,7 +16,7 @@ export interface ArgumentOptions {
 export interface BlockContextType {
   blocks: Map<string, BlockData>;
   solutionTopLevel: readonly string[];
-  solutionIsCorrect: boolean;
+  solutionIsCorrect: boolean | null;
 }
 
 export const BlockContext = createContext<BlockContextType | null>(null);
