@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { BlockData } from "./block-types.ts";
+import type { BlockData } from "../../block-types.ts";
 
 export interface ArgumentOptions {
   minAmount: number;

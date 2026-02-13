@@ -1,10 +1,10 @@
 import type { BlockContextType } from "../BlockContext.ts";
-import { ArgumentSlotPrefix } from "../../../../block/ArgumentSlot.tsx";
+import { ArgumentSlotPrefix } from "../../../../components/block/ArgumentSlot.tsx";
 import { SectionTitles, throwNull } from "../../../utils.ts";
 import type { Active, Over } from "@dnd-kit/core";
 import type { BlockDispatchType } from "./block-reducer.ts";
 import type { Draft } from "immer";
-import { type BlockData, isBlockWithChildren } from "../block-types.ts";
+import { type BlockData, isBlockWithChildren } from "../../../block-types.ts";
 
 export function handleSetParent(
   draft: Draft<BlockContextType>,

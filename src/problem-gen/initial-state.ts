@@ -1,9 +1,9 @@
-import { SectionTitles } from "../../utils.ts";
+import { SectionTitles } from "../common/utils.ts";
 
 import {
   generateInitialStateFromSolution,
   generateSolutionFromScamper,
-} from "../../../problem-gen/state-generators.ts";
+} from "./state-generators.ts";
 
 const solution = generateSolutionFromScamper("(- `2 (reduce `+ (list 4 5)))");
 const blocks = generateInitialStateFromSolution(solution);

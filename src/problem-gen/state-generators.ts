@@ -1,4 +1,4 @@
-import type { BlockData } from "../common/providers/block/block-types.ts";
+import type { BlockData } from "../common/block-types.ts";
 import { parseTemplateSolution, turnIntoBlock } from "./gen-utils.ts";
 import { SectionTitles, throwNull } from "../common/utils.ts";
 

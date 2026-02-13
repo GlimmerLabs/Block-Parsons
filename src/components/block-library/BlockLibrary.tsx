@@ -1,8 +1,8 @@
 import { Stack } from "@mui/material";
 import { Block } from "../block/Block.tsx";
-import { Draggable } from "../common/dnd-wrappers/Draggable.tsx";
-import { useBlockContext } from "../common/providers/block/BlockContext.ts";
-import { SectionTitles } from "../common/utils.ts";
+import { Draggable } from "../../common/dnd-wrappers/Draggable.tsx";
+import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
+import { SectionTitles } from "../../common/utils.ts";
 
 export function BlockLibrary() {
   const { blocks } = useBlockContext();

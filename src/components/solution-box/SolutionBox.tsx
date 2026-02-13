@@ -1,10 +1,10 @@
 import { Block } from "../block/Block.tsx";
-import { Sortable } from "../common/dnd-wrappers/Sortable.tsx";
+import { Sortable } from "../../common/dnd-wrappers/Sortable.tsx";
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { useBlockContext } from "../common/providers/block/BlockContext.ts";
+import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
 import { useDndContext } from "@dnd-kit/core";
 
 export function SolutionBox() {

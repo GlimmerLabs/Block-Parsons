@@ -1,9 +1,9 @@
 import { Stack } from "@mui/material";
 import { TitledSection } from "./TitledSection.tsx";
-import { BlockLibrary } from "../block-library/BlockLibrary.tsx";
-import { SolutionBox } from "../solution-box/SolutionBox.tsx";
+import { BlockLibrary } from "./block-library/BlockLibrary.tsx";
+import { SolutionBox } from "./solution-box/SolutionBox.tsx";
 import { SectionTitles } from "../common/utils.ts";
-import { ActionsMade } from "./ActionsMade.tsx";
+import { Statistics } from "./Statistics.tsx";
 import { Attribution } from "./Attribution.tsx";
 
 export function MainContent() {
@@ -17,7 +17,7 @@ export function MainContent() {
           <SolutionBox />
         </TitledSection>
       </Stack>
-      <ActionsMade />
+      <Statistics />
       <Attribution />
     </Stack>
   );

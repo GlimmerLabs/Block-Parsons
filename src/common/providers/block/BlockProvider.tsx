@@ -1,7 +1,7 @@
 import { type PropsWithChildren } from "react";
 import { BlockContext, type BlockContextType } from "./BlockContext.ts";
 import { BlockDispatchContext } from "./BlockDispatchContext.ts";
-import { initialState } from "./initial-state.ts";
+import { initialState } from "../../../problem-gen/initial-state.ts";
 import { useImmerReducer } from "use-immer";
 import {
   type BlockDispatchType,

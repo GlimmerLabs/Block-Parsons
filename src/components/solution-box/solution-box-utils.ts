@@ -4,7 +4,7 @@ import {
   pointerWithin,
 } from "@dnd-kit/core";
 import type { CollisionDescriptor } from "@dnd-kit/core/dist/utilities/algorithms/types";
-import { SectionTitles } from "../common/utils.ts";
+import { SectionTitles } from "../../common/utils.ts";
 
 // collision
 export const collisionDetection: CollisionDetection = ({
