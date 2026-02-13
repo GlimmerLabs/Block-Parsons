@@ -6,6 +6,7 @@ import { useDndContext } from "@dnd-kit/core";
 import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
 import { isConstantBlockData, type Slot } from "../../common/block-types.ts";
 import { useCallback } from "react";
+import { ConstantBlock } from "./ConstantBlock.tsx";
 
 export interface BlockProps {
   id: string;
@@ -57,18 +58,7 @@ export function Block({
     [getLockedBlockElement, id, presentational],
   );
 
-  if (isConstantBlockData(block)) {
-    return (
-      <Box
-        bgcolor={"lightgreen"}
-        padding={"0.5em"}
-        borderRadius={"0.5em"}
-        fontFamily={"monospace"}
-      >
-        {block.value}
-      </Box>
-    );
-  }
+  if (isConstantBlockData(block)) return <ConstantBlock value={block.value} />;
 
   const [firstChild, ...restChildren] = block.children;
   let firstSlot: Slot | null = firstChild;

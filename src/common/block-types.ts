@@ -10,7 +10,7 @@ interface BaseBlockData {
   parentId: string;
 }
 
-interface ConstantBlockData extends BaseBlockData {
+export interface ConstantBlockData extends BaseBlockData {
   type: "ConstantBlock";
   value: string;
 }
