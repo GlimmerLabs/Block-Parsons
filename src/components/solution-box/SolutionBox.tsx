@@ -19,7 +19,11 @@ export function SolutionBox() {
     >
       {solutionTopLevel.map((id) => (
         <Sortable id={id} key={id}>
-          <Block id={id} presentational={active?.id === id} />
+          <Block
+            id={id}
+            presentational={active?.id === id}
+            allowFirstClass={false}
+          />
         </Sortable>
       ))}
     </SortableContext>
