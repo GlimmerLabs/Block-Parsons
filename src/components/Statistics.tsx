@@ -1,5 +1,5 @@
 import { Button, Stack, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useBlockDispatchContext } from "../common/providers/block/BlockDispatchContext.ts";
 
 function formatTime(ms: number) {
@@ -27,13 +27,13 @@ export function Statistics() {
     };
   }, []);
 
-  const handleCheck = () => {
+  const handleCheck = useCallback(() => {
     setCount((prev) => prev + 1);
-  };
+  }, []);
 
-  const handleReset = () => {
+  const handleReset = useCallback(() => {
     dispatch({ type: "RESET" });
-  };
+  }, [dispatch]);
 
   return (
     <Stack spacing={2} alignItems="center" justifyContent="center">
