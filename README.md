@@ -68,6 +68,7 @@ Here is a list of things to do if we had another five weeks (in order of subject
   - directly compare against the generated solution, or
   - compare expected and actual Scamper output.
 - If we are doing Scamper interop anyway, it might be more elegant to just do the latter approach.
+- **UPDATE:** The former approach is now implemented. This will still remain until the latter approach is implemented.
 ### • Think about how to export/store student analytics.
 - It would be nice if student analytics could be exported to Runestone.
 - There should still be a general fallback option when instructors don't tie their Scheme-based course to Runestone.
