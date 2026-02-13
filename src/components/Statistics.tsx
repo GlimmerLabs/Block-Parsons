@@ -29,7 +29,8 @@ export function Statistics() {
 
   const handleCheck = useCallback(() => {
     setCount((prev) => prev + 1);
-  }, []);
+    dispatch({ type: "CHECK" });
+  }, [dispatch]);
 
   const handleReset = useCallback(() => {
     dispatch({ type: "RESET" });

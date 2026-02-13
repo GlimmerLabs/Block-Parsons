@@ -1,9 +1,13 @@
 import type { Active, Over } from "@dnd-kit/core";
 import type { BlockContextType } from "../BlockContext.ts";
-import type { Draft } from "immer";
+import { current, type Draft } from "immer";
 import type { ImmerReducer } from "use-immer";
 import { handleSetParent } from "./set-parent-handler.ts";
-import { initialState } from "../../../../problem-gen/initial-state.ts";
+import {
+  initialState,
+  solutionBlocks,
+} from "../../../../problem-gen/initial-state.ts";
+import { isEqual } from "es-toolkit";
 
 export type BlockDispatchType =
   | {
@@ -16,6 +20,9 @@ export type BlockDispatchType =
     }
   | {
       type: "RESET";
+    }
+  | {
+      type: "CHECK";
     };
 
 export const blockReducer: ImmerReducer<BlockContextType, BlockDispatchType> = (
@@ -30,6 +37,13 @@ export const blockReducer: ImmerReducer<BlockContextType, BlockDispatchType> = (
     }
     case "RESET": {
       return initialState;
+    }
+    case "CHECK": {
+      // TODO: make not naive solution checking (probably relies on Scamper integration)
+      return {
+        ...draft,
+        solutionIsCorrect: isEqual(current(draft).blocks, solutionBlocks),
+      };
     }
   }
 };
