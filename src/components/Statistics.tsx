@@ -1,6 +1,7 @@
-import { Button, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useBlockDispatchContext } from "../common/providers/block/BlockDispatchContext.ts";
+import { useBlockContext } from "../common/providers/block/BlockContext.ts";
 
 function formatTime(ms: number) {
   const hours = Math.floor(ms / (3600 * 1000));
@@ -14,6 +15,7 @@ export function Statistics() {
   const [count, setCount] = useState(0);
   const [timeTaken, setTimeTaken] = useState(0);
 
+  const { solutionIsCorrect } = useBlockContext();
   const dispatch = useBlockDispatchContext();
 
   useEffect(() => {
@@ -46,6 +48,15 @@ export function Statistics() {
       </Stack>
       <Typography>Attempts: {count}</Typography>
       <Typography>Time Taken: {formatTime(timeTaken)}</Typography>
+      {solutionIsCorrect !== null && (
+        <Box
+          bgcolor={solutionIsCorrect ? "lightgreen" : "tomato"}
+          padding={"0.5em"}
+          borderRadius={"0.5em"}
+        >
+          <Typography>{solutionIsCorrect ? "Correct" : "Incorrect"}</Typography>
+        </Box>
+      )}
     </Stack>
   );
 }

@@ -16,5 +16,5 @@ const solutionTopLevel = [...blocks.keys()].filter(
 export const initialState = {
   blocks,
   solutionTopLevel,
-  solutionIsCorrect: false,
+  solutionIsCorrect: null,
 };
