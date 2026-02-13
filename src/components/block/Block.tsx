@@ -1,7 +1,7 @@
 import { Box, Stack, type StackProps } from "@mui/material";
-import { ArgumentSlot } from "./ArgumentSlot.tsx";
+import { ArgumentSlot } from "./slot/ArgumentSlot.tsx";
 import { throwNull } from "../../common/utils.ts";
-import { PresentationalArgumentSlot } from "./PresentationalArgumentSlot.tsx";
+import { PresentationalArgumentSlot } from "./slot/PresentationalArgumentSlot.tsx";
 import { useDndContext } from "@dnd-kit/core";
 import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
 import { isConstantBlockData, type Slot } from "../../common/block-types.ts";

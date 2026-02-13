@@ -1,7 +1,7 @@
 import { beforeEach, expect, it } from "vitest";
 import { render, type RenderResult } from "@testing-library/react";
 import { Block } from "./Block.tsx";
-import { GenericSlotLabel } from "./aria-labels.ts";
+import { GenericSlotLabel } from "./block-aria-labels.ts";
 import { newUUID } from "../../common/utils.ts";
 
 describe("Block component", () => {
