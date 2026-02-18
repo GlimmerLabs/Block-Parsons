@@ -1,7 +1,8 @@
 import { Box } from "@mui/material";
 import { Scamper } from "scamper/src";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { mkOptions } from "scamper/src/scamper.ts";
+import { useErrorBoundary } from "react-error-boundary";
 
 interface ScamperOutputProps {
   src: string;
@@ -9,21 +10,29 @@ interface ScamperOutputProps {
 
 export function ScamperOutput({ src }: ScamperOutputProps) {
   const elementRef = useRef<HTMLElement | null>(null);
-  const [scamper, setScamper] = useState<Scamper | null>(null);
+  const scamperRef = useRef<Scamper | null>(null);
+
+  const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
     if (elementRef.current === null) return;
-    if (scamper === null) {
-      setScamper(new Scamper(elementRef.current, src, mkOptions()));
-      return;
-    }
-    console.log(scamper.sem.isFinished());
+    const element = elementRef.current;
     try {
+      if (scamperRef.current === null) {
+        scamperRef.current = new Scamper(element, src, mkOptions());
+      }
+      const scamper = scamperRef.current;
+      console.log(scamper.sem.isFinished());
       scamper.sem.executeUnsafely();
-    } catch (arr) {
-      console.error(arr);
+    } catch (errs) {
+      showBoundary(errs);
     }
-  }, [scamper, src]);
+
+    return () => {
+      scamperRef.current = null;
+      element.innerHTML = "";
+    };
+  }, [showBoundary, src]);
 
   return <Box ref={elementRef} />;
 }

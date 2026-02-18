@@ -2,7 +2,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useBlockDispatchContext } from "../../common/providers/block/BlockDispatchContext.ts";
 import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
-import { ScamperOutput } from "./ScamperOutput.tsx";
+import { SafeScamperOutput } from "./SafeScamperOutput.tsx";
 
 function formatTime(ms: number) {
   const hours = Math.floor(ms / (3600 * 1000));
@@ -61,7 +61,7 @@ export function Tools() {
             <Typography>{isCorrect ? "Correct" : "Incorrect"}</Typography>
           </Box>
           {code !== null && !isCorrect && (
-            <ScamperOutput key={code} src={code} />
+            <SafeScamperOutput key={code} src={code} />
           )}
         </Stack>
       )}
