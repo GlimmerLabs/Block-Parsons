@@ -5,7 +5,12 @@ import {
 } from "scamper/src/parser/parser.ts";
 import { AST, SyntaxNode } from "scamper/src/ast.ts";
 import { newUUID, SectionTitles, throwNull } from "../common/utils.ts";
-import type { BlockData, Slot } from "../common/block-types.ts";
+import {
+  type BlockData,
+  isBlockWithChildrenData,
+  isConstantBlockData,
+  type Slot,
+} from "../common/block-types.ts";
 import type { TokenHandler } from "scamper/src/parser/tokenhandler.ts";
 import { DefaultTokenHandlingSettings } from "scamper/src/parser/tokenhandler.ts";
 import {
@@ -13,6 +18,7 @@ import {
   type ParseHandler,
 } from "scamper/src/parser/parsehandler.ts";
 import { Value } from "scamper/src/lang";
+import type { BlockContextType } from "../common/providers/block/BlockContext.ts";
 
 const BacktickTag = "invert-generation";
 const CaretTag = "convert-function-style";
@@ -162,4 +168,73 @@ export function parseTemplateSolution(src: string) {
   }
 
   return new AST(values);
+}
+
+interface ConversionError {
+  type: "ConversionError";
+  message: string;
+}
+interface ConversionSuccess {
+  type: "ConversionSuccess";
+  code: string;
+  blocksEncountered: number;
+}
+type ConversionResult = ConversionSuccess | ConversionError;
+
+export function isConversionError(
+  result: ConversionResult,
+): result is ConversionError {
+  return result.type === "ConversionError";
+}
+export function convertBlocksToScamper(
+  blocks: BlockContextType["blocks"],
+  topLevel: BlockContextType["solution"]["topLevel"],
+): ConversionResult {
+  const count = blocks.size;
+
+  function scamperifyBlock(block: BlockData): ConversionResult {
+    if (isConstantBlockData(block)) {
+      return {
+        type: "ConversionSuccess",
+        code: block.value,
+        blocksEncountered: 1,
+      };
+    }
+    if (!isBlockWithChildrenData(block))
+      return throwNull("block is neither constant nor block with children?");
+    // else is block with children
+    const childCode: string[] = [];
+    let blocksEncountered = 1;
+    for (const { id } of block.children) {
+      if (!id) return { type: "ConversionError", message: "null child id" };
+      const conversionResult = scamperifyBlock(
+        blocks.get(id) ?? throwNull("child block id is not a real block?"),
+      );
+      if (isConversionError(conversionResult)) return conversionResult;
+      childCode.push(conversionResult.code);
+      blocksEncountered += conversionResult.blocksEncountered;
+    }
+    return {
+      type: "ConversionSuccess",
+      code: `(${childCode.join(" ")})`,
+      blocksEncountered,
+    };
+  }
+
+  let finalCode: string = "";
+  let blocksEncountered = 0;
+  for (const blockId of topLevel) {
+    const block =
+      blocks.get(blockId) ?? throwNull("top level block not found?");
+    const conversionResult = scamperifyBlock(block);
+    if (isConversionError(conversionResult)) return conversionResult;
+    finalCode += conversionResult.code;
+    blocksEncountered += conversionResult.blocksEncountered;
+  }
+  return blocksEncountered === count
+    ? { type: "ConversionSuccess", code: finalCode, blocksEncountered }
+    : {
+        type: "ConversionError",
+        message: `blocks encountered don't match count (${blocksEncountered.toString()} / ${count.toString()})`,
+      };
 }

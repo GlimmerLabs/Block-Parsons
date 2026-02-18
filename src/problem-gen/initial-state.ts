@@ -4,6 +4,7 @@ import {
   generateInitialStateFromSolution,
   generateSolutionFromScamper,
 } from "./state-generators.ts";
+import type { BlockContextType } from "../common/providers/block/BlockContext.ts";
 
 const solution = generateSolutionFromScamper("^(reduce + (list 4 5))");
 export const solutionBlocks = structuredClone(solution);
@@ -13,8 +14,11 @@ const solutionTopLevel = [...blocks.keys()].filter(
   (key) => blocks.get(key)?.parentId === SectionTitles.SolutionBox,
 );
 
-export const initialState = {
+export const initialState: BlockContextType = {
   blocks,
-  solutionTopLevel,
-  solutionIsCorrect: null,
+  solution: {
+    topLevel: solutionTopLevel,
+    isCorrect: null,
+    code: null,
+  },
 };
