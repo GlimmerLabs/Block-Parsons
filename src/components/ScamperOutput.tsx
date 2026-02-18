@@ -18,7 +18,7 @@ export function ScamperOutput({ src }: ScamperOutputProps) {
       return;
     }
     console.log(scamper.sem.isFinished());
-    scamper.runProgram();
+    scamper.sem.execute();
   }, [scamper, src]);
 
   return <Box ref={elementRef} />;
