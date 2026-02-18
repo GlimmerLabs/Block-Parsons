@@ -2,6 +2,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { useBlockDispatchContext } from "../common/providers/block/BlockDispatchContext.ts";
 import { useBlockContext } from "../common/providers/block/BlockContext.ts";
+import { ScamperOutput } from "./ScamperOutput.tsx";
 
 function formatTime(ms: number) {
   const hours = Math.floor(ms / (3600 * 1000));
@@ -16,7 +17,7 @@ export function Statistics() {
   const [timeTaken, setTimeTaken] = useState(0);
 
   const {
-    solution: { isCorrect },
+    solution: { isCorrect, code },
   } = useBlockContext();
   const dispatch = useBlockDispatchContext();
 
@@ -51,7 +52,7 @@ export function Statistics() {
       <Typography>Attempts: {count}</Typography>
       <Typography>Time Taken: {formatTime(timeTaken)}</Typography>
       {isCorrect !== null && (
-        <Stack>
+        <Stack direction={"row"} spacing={2}>
           <Box
             bgcolor={isCorrect ? "lightgreen" : "tomato"}
             padding={"0.5em"}
@@ -59,7 +60,9 @@ export function Statistics() {
           >
             <Typography>{isCorrect ? "Correct" : "Incorrect"}</Typography>
           </Box>
-          <Box id={"scamperOutput"} />
+          {code !== null && !isCorrect && (
+            <ScamperOutput key={code} src={code} />
+          )}
         </Stack>
       )}
     </Stack>
