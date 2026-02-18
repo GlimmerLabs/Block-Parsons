@@ -22,7 +22,7 @@ export interface BlockProps {
 export function Block({
   id,
   presentational: presentationalProp,
-  padding = "0.5em",
+  padding = "0.4em",
   allowFirstClass = true,
 }: BlockProps) {
   const { blocks } = useBlockContext();
@@ -41,7 +41,14 @@ export function Block({
       if (isConstantBlockData(childBlock)) {
         return <Box color={"black"}>{childBlock.value}</Box>;
       }
-      return <Block id={slotId} padding={0} presentational={presentational} />;
+      return (
+        <Block
+          id={slotId}
+          padding={0}
+          presentational={presentational}
+          allowFirstClass={false}
+        />
+      );
     },
     [blocks, presentational],
   );
@@ -91,6 +98,11 @@ export function Block({
     firstSlot = null;
   }
 
+  const firstSlotHasChildren =
+    firstChild.id !== null &&
+    (blocks.get(firstChild.id) ?? throwNull("first child should exist"))
+      .type === "BlockWithChildren";
+
   return (
     <Stack
       width={"fit-content"}
@@ -102,7 +114,8 @@ export function Block({
       useFlexGap
     >
       <Stack
-        direction="row"
+        // if the first slot is not a constant block, try column instead.
+        direction={firstSlotHasChildren ? "column" : "row"}
         // if the current block has childblocks, align baseline, else align flex-start
         alignItems={
           restSlots.some((arg) => arg.id !== null) ? "baseline" : "flex-start"
@@ -111,35 +124,37 @@ export function Block({
       >
         <Stack direction={"row"}>
           <Box>(</Box>
-          {firstSlot &&
-            // TODO: if only one slot, this one won't have an ending bracket
-            getChildBlockElement(firstSlot, 0)}
+          {firstSlot && getChildBlockElement(firstSlot, 0)}
+          {restSlots.length === 0 && <Box>)</Box>}
         </Stack>
-        <Stack spacing={1}>
-          {restSlots.map((slot, index) => {
-            const ChildBlock = getChildBlockElement(
-              slot,
-              firstSlot ? index + 1 : index,
-            );
-            const isLast = index === restSlots.length - 1;
+        {restSlots.length > 0 && (
+          <Stack spacing={1}>
+            {restSlots.map((slot, index) => {
+              const ChildBlock = getChildBlockElement(
+                slot,
+                firstSlot ? index + 1 : index,
+              );
+              const isLast = index === restSlots.length - 1;
 
-            return (
-              <Stack direction="row" alignItems="flex-end" key={index}>
-                {ChildBlock}
-                {isLast && (
-                  <Box
-                    marginLeft="0.25em"
-                    {...(!slot.locked && slot.id && blocks.has(slot.id)
-                      ? { marginBottom: "1em" }
-                      : {})}
-                  >
-                    )
-                  </Box>
-                )}
-              </Stack>
-            );
-          })}
-        </Stack>
+              return (
+                <Stack direction="row" alignItems="flex-end" key={index}>
+                  {firstSlotHasChildren && <Box minWidth={"3em"} />}
+                  {ChildBlock}
+                  {isLast && (
+                    <Box
+                      marginLeft="0.25em"
+                      {...(!slot.locked && slot.id && blocks.has(slot.id)
+                        ? { marginBottom: "1em" }
+                        : {})}
+                    >
+                      )
+                    </Box>
+                  )}
+                </Stack>
+              );
+            })}
+          </Stack>
+        )}
       </Stack>
     </Stack>
   );

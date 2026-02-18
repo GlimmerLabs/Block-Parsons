@@ -2,11 +2,12 @@ import { SectionTitles } from "../common/utils.ts";
 
 import {
   generateInitialStateFromSolution,
-  generateSolutionFromScamper,
+  generateSolutionFromTemplate,
 } from "./state-generators.ts";
 import type { BlockContextType } from "../common/providers/block/BlockContext.ts";
 
-const solution = generateSolutionFromScamper("^(reduce + (list 4 5))");
+const template = "^(define double (lambda (n) (reduce + (list n n))))";
+const solution = generateSolutionFromTemplate(template);
 export const solutionBlocks = structuredClone(solution);
 const blocks = generateInitialStateFromSolution(solution);
 

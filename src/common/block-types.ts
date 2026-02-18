@@ -37,7 +37,7 @@ export function canBeFirstClass(
 } {
   return (
     isBlockWithChildrenData(block) &&
-    block.children.length > 0 &&
+    block.children.length > 1 &&
     block.children.every(({ id }, index) =>
       index === 0 ? id !== null : id === null,
     )

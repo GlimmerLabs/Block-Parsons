@@ -6,6 +6,6 @@ export const ArgumentSlotStyles: BoxProps = {
   width: "fit-content",
   marginLeft: "0em",
   bgcolor: "white",
-  padding: "0.5em",
+  padding: "0.4em",
   borderRadius: "0.5em",
 };

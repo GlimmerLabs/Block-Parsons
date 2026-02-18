@@ -8,10 +8,11 @@ const ScamperErrorInterpreter: (props: FallbackProps) => ReactNode = ({
 }) => {
   return (
     <>
-      {(error as ScamperError[]).map(({ data }) => (
+      {(error as ScamperError[]).map(({ message, data, source }) => (
         <>
+          {message + "\n"}
           {data &&
-            `${data.hint.expected} ${data.hint.actual ? data.hint.actual : "no actual"}`}
+            `${source ?? "no source"} ${data.hint.expected} ${data.hint.actual ? data.hint.actual : "no actual"}`}
         </>
       ))}
     </>

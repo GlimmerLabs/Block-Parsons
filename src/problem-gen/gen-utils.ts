@@ -85,10 +85,20 @@ export function turnIntoBlock(
     blockChildren.push(childSlot);
   }
 
+  // TODO: find way to detect varargs, for now just check for list or + in first
+  const firstBlockData =
+    blockMap.get(
+      firstBlockSlot.id ?? throwNull("first block slot id is somehow null"),
+    ) ?? throwNull("first block data doesn't exist somehow");
+  const expandable =
+    firstBlockData.type === "ConstantBlock" &&
+    (firstBlockData.value === "list" || firstBlockData.value === "+");
+
   blockMap.set(blockId, {
     type: "BlockWithChildren",
     parentId: SectionTitles.SolutionBox,
     children: blockChildren,
+    expandable,
   });
 
   return {
