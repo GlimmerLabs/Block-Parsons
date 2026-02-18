@@ -8,16 +8,18 @@ import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
 import { useDndContext } from "@dnd-kit/core";
 
 export function SolutionBox() {
-  const { solutionTopLevel } = useBlockContext();
+  const {
+    solution: { topLevel },
+  } = useBlockContext();
   const { active } = useDndContext();
-  const sortedBlockIds = [...solutionTopLevel.keys()];
+  const sortedBlockIds = [...topLevel.keys()];
 
   return (
     <SortableContext
       items={sortedBlockIds}
       strategy={verticalListSortingStrategy}
     >
-      {solutionTopLevel.map((id) => (
+      {topLevel.map((id) => (
         <Sortable id={id} key={id}>
           <Block
             id={id}

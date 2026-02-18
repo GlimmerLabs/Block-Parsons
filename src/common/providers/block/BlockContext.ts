@@ -13,10 +13,14 @@ export interface ArgumentOptions {
 //   parentId: string;
 // }
 
+interface Solution {
+  topLevel: readonly string[];
+  isCorrect: boolean | null;
+  code: string | null;
+}
 export interface BlockContextType {
   blocks: Map<string, BlockData>;
-  solutionTopLevel: readonly string[];
-  solutionIsCorrect: boolean | null;
+  solution: Solution;
 }
 
 export const BlockContext = createContext<BlockContextType | null>(null);

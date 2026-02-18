@@ -15,7 +15,9 @@ export function Statistics() {
   const [count, setCount] = useState(0);
   const [timeTaken, setTimeTaken] = useState(0);
 
-  const { solutionIsCorrect } = useBlockContext();
+  const {
+    solution: { isCorrect },
+  } = useBlockContext();
   const dispatch = useBlockDispatchContext();
 
   useEffect(() => {
@@ -48,14 +50,17 @@ export function Statistics() {
       </Stack>
       <Typography>Attempts: {count}</Typography>
       <Typography>Time Taken: {formatTime(timeTaken)}</Typography>
-      {solutionIsCorrect !== null && (
-        <Box
-          bgcolor={solutionIsCorrect ? "lightgreen" : "tomato"}
-          padding={"0.5em"}
-          borderRadius={"0.5em"}
-        >
-          <Typography>{solutionIsCorrect ? "Correct" : "Incorrect"}</Typography>
-        </Box>
+      {isCorrect !== null && (
+        <Stack>
+          <Box
+            bgcolor={isCorrect ? "lightgreen" : "tomato"}
+            padding={"0.5em"}
+            borderRadius={"0.5em"}
+          >
+            <Typography>{isCorrect ? "Correct" : "Incorrect"}</Typography>
+          </Box>
+          <Box id={"scamperOutput"} />
+        </Stack>
       )}
     </Stack>
   );

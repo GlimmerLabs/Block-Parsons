@@ -14,7 +14,7 @@ export function handleSetParent(
   action: BlockDispatchType,
 ): void {
   const blocks = draft.blocks;
-  const solutionTopLevel: Draft<string[]> = draft.solutionTopLevel;
+  const solutionTopLevel: Draft<string[]> = draft.solution.topLevel;
   if (action.type !== "SET_PARENT") {
     throw new Error("expected SET_PARENT action");
   }
@@ -53,7 +53,7 @@ export function handleSetParent(
       over,
     );
     // console.log("new top level", newTopLevel);
-    draft.solutionTopLevel = [...newTopLevel];
+    draft.solution.topLevel = [...newTopLevel];
     return;
   }
 
@@ -76,7 +76,7 @@ export function handleSetParent(
   parentChildren[slotIndex].id = id;
   if (!tempId) {
     // no swap required
-    draft.solutionTopLevel = updatedTopLevel;
+    draft.solution.topLevel = updatedTopLevel;
     return;
   }
   // console.log("swapping", originalIndex);
@@ -94,7 +94,7 @@ export function handleSetParent(
     blocks.get(tempId) ?? throwNull(`temp block ${tempId} not found?`);
   swappedBlock.parentId = originalParentId;
 
-  draft.solutionTopLevel = updatedTopLevel;
+  draft.solution.topLevel = updatedTopLevel;
 }
 
 function removeChildFromParent(
