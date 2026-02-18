@@ -18,7 +18,11 @@ export function ScamperOutput({ src }: ScamperOutputProps) {
       return;
     }
     console.log(scamper.sem.isFinished());
-    scamper.sem.execute();
+    try {
+      scamper.sem.executeUnsafely();
+    } catch (arr) {
+      console.error(arr);
+    }
   }, [scamper, src]);
 
   return <Box ref={elementRef} />;

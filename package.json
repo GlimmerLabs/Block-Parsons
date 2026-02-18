@@ -23,7 +23,7 @@
     "immer": "^10.1.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "scamper": "github:eoyoa/scamper#custom-tokenizer",
+    "scamper": "github:eoyoa/scamper#pp-error-interpretation",
     "use-immer": "^0.11.0",
     "uuid": "^11.1.0"
   },
