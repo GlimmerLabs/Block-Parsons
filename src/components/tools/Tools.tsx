@@ -1,7 +1,7 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
-import { useBlockDispatchContext } from "../common/providers/block/BlockDispatchContext.ts";
-import { useBlockContext } from "../common/providers/block/BlockContext.ts";
+import { useBlockDispatchContext } from "../../common/providers/block/BlockDispatchContext.ts";
+import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
 import { ScamperOutput } from "./ScamperOutput.tsx";
 
 function formatTime(ms: number) {
@@ -12,7 +12,7 @@ function formatTime(ms: number) {
   return `${pad(hours)}:${pad(minutes)}:${pad(seconds)}`;
 }
 
-export function Statistics() {
+export function Tools() {
   const [count, setCount] = useState(0);
   const [timeTaken, setTimeTaken] = useState(0);
 
