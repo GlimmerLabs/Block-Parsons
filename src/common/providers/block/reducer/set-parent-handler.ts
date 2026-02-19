@@ -79,16 +79,21 @@ export function handleSetParent(
     draft.solution.topLevel = updatedTopLevel;
     return;
   }
-  // console.log("swapping", originalIndex);
+  console.log("swapping", originalIndex);
   if (originalParentId === SectionTitles.SolutionBox) {
     // top level swap
-    // console.warn("top level swap");
+    console.warn("top level swap");
     // add temp to top level
     updatedTopLevel.splice(originalTopLevelIndex, 0, tempId);
   } else if (originalIndex > -1) {
     // update ogChildBlocks
-    // console.warn("updating old parent's children");
-    parentChildren[originalIndex].id = tempId;
+    console.warn("updating old parent's children");
+    const originalParentBlock =
+      blocks.get(originalParentId) ?? throwNull("original parent should exist");
+    if (!isBlockWithChildrenData(originalParentBlock)) {
+      throw new Error("original parent should have children");
+    }
+    originalParentBlock.children[originalIndex].id = tempId;
   }
   const swappedBlock =
     blocks.get(tempId) ?? throwNull(`temp block ${tempId} not found?`);
