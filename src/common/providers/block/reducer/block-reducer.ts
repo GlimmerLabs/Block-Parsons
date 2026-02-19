@@ -61,9 +61,11 @@ export const blockReducer: ImmerReducer<BlockContextType, BlockDispatchType> = (
         };
       }
       const { code: solutionCode } = conversionResult;
-      console.log(solutionCode);
 
       const isCorrect = isEqual(current(draft).blocks, solutionBlocks);
+      if (!isCorrect) {
+        console.log(current(draft).blocks, solutionBlocks);
+      }
       return {
         ...draft,
         solution: {
