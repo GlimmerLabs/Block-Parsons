@@ -65,6 +65,7 @@ export function Block({
         idSuffix,
         blockId: slotId,
         allowFirstClass: slot.allowFirstClass,
+        fake: slot.fake,
       };
       return presentational ? (
         <PresentationalArgumentSlot {...propsToPass} />
@@ -92,10 +93,22 @@ export function Block({
 
   const [firstChild, ...restChildren] = block.children;
   let firstSlot: Slot | null = firstChild;
-  const restSlots = restChildren;
+  let restSlots = restChildren;
   if (!firstSlot.id || !firstSlot.locked) {
     restSlots.unshift(firstSlot);
     firstSlot = null;
+  }
+
+  if (block.expandable) {
+    // remove empty slots throughout list
+    restSlots = restSlots.filter((slot) => slot.id !== null);
+    // add an extra fake slot at end
+    restSlots.push({
+      id: null,
+      locked: false,
+      allowFirstClass: false,
+      fake: true,
+    });
   }
 
   const firstSlotHasChildren =

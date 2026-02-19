@@ -91,6 +91,7 @@ export function turnIntoBlock(
       firstBlockSlot.id ?? throwNull("first block slot id is somehow null"),
     ) ?? throwNull("first block data doesn't exist somehow");
   const expandable =
+    (firstBlockSlot.locked ? !caretOperator : caretOperator) &&
     firstBlockData.type === "ConstantBlock" &&
     (firstBlockData.value === "list" || firstBlockData.value === "+");
 
@@ -216,7 +217,9 @@ export function convertBlocksToScamper(
     const childCode: string[] = [];
     let blocksEncountered = 1;
     for (const { id } of block.children) {
-      if (!id) return { type: "ConversionError", message: "null child id" };
+      if (!id) {
+        return { type: "ConversionError", message: "null child id" };
+      }
       const conversionResult = scamperifyBlock(
         blocks.get(id) ?? throwNull("child block id is not a real block?"),
       );

@@ -41,7 +41,7 @@ export function generateInitialStateFromSolution(
     }
   }
 
-  console.log(structuredClone(blockMap));
+  // console.log(structuredClone(blockMap));
 
   return blockMap;
 }
