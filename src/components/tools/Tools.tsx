@@ -52,11 +52,12 @@ export function Tools() {
       <Typography>Attempts: {count}</Typography>
       <Typography>Time Taken: {formatTime(timeTaken)}</Typography>
       {isCorrect !== null && (
-        <Stack direction={"row"} spacing={2}>
+        <Stack direction={"row"} spacing={2} justifyContent={"center"}>
           <Box
             bgcolor={isCorrect ? "lightgreen" : "tomato"}
             padding={"0.5em"}
             borderRadius={"0.5em"}
+            height={"fit-content"}
           >
             <Typography>{isCorrect ? "Correct" : "Incorrect"}</Typography>
           </Box>
