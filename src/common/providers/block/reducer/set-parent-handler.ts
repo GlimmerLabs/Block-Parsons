@@ -113,6 +113,12 @@ export function handleSetParent(
   // don't allow swap with original parent
   if (tempId === originalParentId) {
     // console.warn("ignoring attempted swap with original parent");
+    // add back to original parent
+    const originalParentBlock = getOriginalParentBlock(
+      originalParentId,
+      blocks,
+    );
+    originalParentBlock.children[originalIndex].id = id;
     return;
   }
   child.parentId = newParentId;
