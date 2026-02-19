@@ -20,6 +20,8 @@ export const initialState: BlockContextType = {
   solution: {
     topLevel: solutionTopLevel,
     isCorrect: null,
+    isComplete: null,
+    errorMessage: null,
     code: null,
   },
 };

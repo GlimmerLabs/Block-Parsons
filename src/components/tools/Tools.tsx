@@ -1,5 +1,5 @@
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
+import { Button, Stack, Typography } from "@mui/material";
+import { useCallback, useEffect, useState, useMemo } from "react";
 import { useBlockDispatchContext } from "../../common/providers/block/BlockDispatchContext.ts";
 import { useBlockContext } from "../../common/providers/block/BlockContext.ts";
 import { SafeScamperOutput } from "./SafeScamperOutput.tsx";
@@ -17,7 +17,7 @@ export function Tools() {
   const [timeTaken, setTimeTaken] = useState(0);
 
   const {
-    solution: { isCorrect, code },
+    solution: { isCorrect, isComplete, code, errorMessage },
   } = useBlockContext();
   const dispatch = useBlockDispatchContext();
 
@@ -41,6 +41,31 @@ export function Tools() {
     dispatch({ type: "RESET" });
   }, [dispatch]);
 
+  const handleFeedback = useMemo(() => {
+    if (isCorrect === null) return null;
+
+    if (isCorrect) {
+      return {
+        color: "success",
+        title: "Good job!",
+        message: "You have solved the problem!",
+      } as const;
+    }
+    if (!isComplete) {
+      return {
+        color: "warning",
+        title: "Incomplete",
+        message: "Try to construct a solution using all blocks!",
+      } as const;
+    }
+
+    return {
+      color: "error",
+      title: "Incorrect",
+      message: errorMessage || "The solution is incorrect. Please try again.",
+    } as const;
+  }, [isComplete, isCorrect, errorMessage]);
+
   return (
     <Stack spacing={2} alignItems="center" justifyContent="center">
       <Stack direction="row" spacing={2} justifyContent="center">
@@ -51,16 +76,24 @@ export function Tools() {
       </Stack>
       <Typography>Attempts: {count}</Typography>
       <Typography>Time Taken: {formatTime(timeTaken)}</Typography>
-      {isCorrect !== null && (
+      {handleFeedback !== null && (
         <Stack direction={"row"} spacing={2} justifyContent={"center"}>
-          <Box
-            bgcolor={isCorrect ? "lightgreen" : "tomato"}
-            padding={"0.5em"}
-            borderRadius={"0.5em"}
-            height={"fit-content"}
+          <Typography
+            sx={{
+              bgcolor:
+                handleFeedback.color === "success"
+                  ? "rgba(144, 238, 144, 0.3)"
+                  : handleFeedback.color === "warning"
+                    ? "rgba(255, 165, 0, 0.3)"
+                    : "rgba(255, 99, 71, 0.3)",
+              padding: "0.5em",
+              borderRadius: "0.5em",
+              height: "fit-content",
+            }}
           >
-            <Typography>{isCorrect ? "Correct" : "Incorrect"}</Typography>
-          </Box>
+            <Typography fontWeight="bold">{handleFeedback.title}</Typography>
+            <Typography>{handleFeedback.message} </Typography>
+          </Typography>
           {code !== null && !isCorrect && (
             <SafeScamperOutput key={code} src={code} />
           )}

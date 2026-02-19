@@ -4,6 +4,8 @@ import type { BlockData } from "../../block-types.ts";
 interface Solution {
   topLevel: readonly string[];
   isCorrect: boolean | null;
+  isComplete: boolean | null;
+  errorMessage: string | null;
   code: string | null;
 }
 export interface BlockContextType {
