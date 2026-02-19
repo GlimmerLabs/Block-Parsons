@@ -94,7 +94,7 @@ export function turnIntoBlock(
   const expandable =
     (firstBlockSlot.locked ? !caretOperator : caretOperator) &&
     firstBlockData.type === "ConstantBlock" &&
-    (firstBlockData.value === "list" || firstBlockData.value === "+");
+    isExpandableSymbol(firstBlockData.value);
 
   blockMap.set(blockId, {
     type: "BlockWithChildren",
@@ -108,6 +108,11 @@ export function turnIntoBlock(
     locked: !caretOperator,
     allowFirstClass: false,
   };
+}
+
+const expandableSymbols = ["list"];
+function isExpandableSymbol(value: string) {
+  return expandableSymbols.includes(value);
 }
 
 const BacktickHandler: TokenHandler = {
