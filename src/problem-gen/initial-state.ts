@@ -6,7 +6,7 @@ import {
 } from "./state-generators.ts";
 import type { BlockContextType } from "../common/providers/block/BlockContext.ts";
 
-const template = "^(define double (lambda (n) (reduce + (list n n))))";
+const template = "^(reduce + (list 1 2))";
 const solution = generateSolutionFromTemplate(template);
 export const solutionBlocks = structuredClone(solution);
 const blocks = generateInitialStateFromSolution(solution);

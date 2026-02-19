@@ -2,6 +2,7 @@ export interface Slot {
   id: string | null;
   locked: boolean;
   allowFirstClass: boolean;
+  fake?: boolean;
 }
 
 type BlockType = "ConstantBlock" | "BlockWithChildren";

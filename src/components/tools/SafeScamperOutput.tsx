@@ -6,13 +6,17 @@ import type { ScamperError } from "scamper/src/lang.ts";
 const ScamperErrorInterpreter: (props: FallbackProps) => ReactNode = ({
   error,
 }) => {
+  if (!Array.isArray(error)) return <>{(error as Error).message}</>;
+  const errs = error as ScamperError[];
   return (
     <>
-      {(error as ScamperError[]).map(({ message, data, source }) => (
+      {errs.map(({ message, data, source }) => (
         <>
-          {message + "\n"}
-          {data &&
-            `${source ?? "no source"} ${data.hint.expected} ${data.hint.actual ? data.hint.actual : "no actual"}`}
+          <>{message + "\n"}</>
+          <>
+            {data &&
+              `${source ?? "no source"} ${data.hint.expected} ${data.hint.actual ? data.hint.actual : "no actual"}`}
+          </>
         </>
       ))}
     </>
