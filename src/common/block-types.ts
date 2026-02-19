@@ -15,6 +15,7 @@ interface BaseBlockData {
 export interface ConstantBlockData extends BaseBlockData {
   type: "ConstantBlock";
   value: string;
+  isSymbol?: boolean;
 }
 
 interface BlockWithChildrenData extends BaseBlockData {

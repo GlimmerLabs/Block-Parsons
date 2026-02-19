@@ -5,13 +5,16 @@ import type { ReactElement } from "react";
 import type { ArgumentSlotProps } from "./ArgumentSlot.tsx";
 import { ArgumentSlotStyles } from "./argument-slot-styles.ts";
 
-export function PresentationalArgumentSlot({ blockId }: ArgumentSlotProps) {
+export function PresentationalArgumentSlot({
+  blockId,
+  fake,
+}: ArgumentSlotProps) {
   const ChildBlock: ReactElement<BlockProps> | null = !blockId ? null : (
     <Block id={blockId} presentational={true} />
   );
   return (
     <Box
-      {...ArgumentSlotStyles}
+      {...ArgumentSlotStyles(fake)}
       aria-label={BlockLabels.PresentationalArgumentSlot}
     >
       {ChildBlock}

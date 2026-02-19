@@ -5,14 +5,14 @@ import { SectionTitles, throwNull } from "../common/utils.ts";
 export function generateSolutionFromTemplate(src: string) {
   const { nodes: queue } = parseTemplateSolution(src);
 
-  // console.log(structuredClone(queue));
+  console.log(structuredClone(queue));
   const solutionMap = new Map<string, BlockData>();
 
   for (const node of queue) {
     turnIntoBlock(node, solutionMap);
   }
 
-  // console.log(structuredClone(solutionMap));
+  console.log(structuredClone(solutionMap));
   return solutionMap;
 }
 

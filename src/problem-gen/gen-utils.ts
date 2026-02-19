@@ -34,6 +34,7 @@ export function turnIntoBlock(
       type: "ConstantBlock",
       value: node.simplename,
       parentId: SectionTitles.SolutionBox,
+      isSymbol: node.value.includes("Symbol"),
     });
     return {
       id: blockId,

@@ -76,7 +76,13 @@ export function Block({
     [getLockedBlockElement, id, presentational],
   );
 
-  if (isConstantBlockData(block)) return <ConstantBlock value={block.value} />;
+  if (isConstantBlockData(block))
+    return (
+      <ConstantBlock
+        value={block.value}
+        {...(block.isSymbol ? { color: ConstantBlockColors.Procedure } : null)}
+      />
+    );
 
   if (allowFirstClass && canBeFirstClass(block)) {
     const identifierBlock =
