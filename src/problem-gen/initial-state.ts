@@ -1,13 +1,12 @@
 import { SectionTitles } from "../common/utils.ts";
-
+import templateSolution from "./template-solution.ppsol?raw";
 import {
   generateInitialStateFromSolution,
   generateSolutionFromTemplate,
 } from "./state-generators.ts";
 import type { BlockContextType } from "../common/providers/block/BlockContext.ts";
 
-const template = "^(reduce + (list 1 2))";
-const solution = generateSolutionFromTemplate(template);
+const solution = generateSolutionFromTemplate(templateSolution);
 export const solutionBlocks = structuredClone(solution);
 const blocks = generateInitialStateFromSolution(solution);
 
