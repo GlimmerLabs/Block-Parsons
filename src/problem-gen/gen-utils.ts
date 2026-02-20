@@ -110,8 +110,8 @@ export function turnIntoBlock(
   };
 }
 
-const expandableSymbols = ["list"];
 function isExpandableSymbol(value: string) {
+  const expandableSymbols = ["list"];
   return expandableSymbols.includes(value);
 }
 
