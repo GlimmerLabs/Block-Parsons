@@ -1,5 +1,5 @@
 import { SectionTitles } from "../common/utils.ts";
-import templateSolution from "./template-solution.ppsol?raw";
+import templateSolution from "./template-solution.scm?raw";
 import {
   generateInitialStateFromSolution,
   generateSolutionFromTemplate,

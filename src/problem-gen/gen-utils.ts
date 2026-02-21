@@ -111,7 +111,7 @@ export function turnIntoBlock(
 }
 
 function isExpandableSymbol(value: string) {
-  const expandableSymbols = ["list"];
+  const expandableSymbols = ["list", "+"];
   return expandableSymbols.includes(value);
 }
 
