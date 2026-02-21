@@ -1,12 +1,12 @@
 import { SectionTitles } from "../common/utils.ts";
-
+import templateSolution from "./template-solution.scm?raw";
 import {
   generateInitialStateFromSolution,
-  generateSolutionFromScamper,
+  generateSolutionFromTemplate,
 } from "./state-generators.ts";
 import type { BlockContextType } from "../common/providers/block/BlockContext.ts";
 
-const solution = generateSolutionFromScamper("^(reduce + (list 4 5))");
+const solution = generateSolutionFromTemplate(templateSolution);
 export const solutionBlocks = structuredClone(solution);
 const blocks = generateInitialStateFromSolution(solution);
 
@@ -19,6 +19,8 @@ export const initialState: BlockContextType = {
   solution: {
     topLevel: solutionTopLevel,
     isCorrect: null,
+    isComplete: null,
+    errorMessage: null,
     code: null,
   },
 };

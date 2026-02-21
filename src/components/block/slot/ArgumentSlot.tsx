@@ -10,6 +10,7 @@ export interface ArgumentSlotProps {
   idSuffix: string;
   blockId?: string | null;
   allowFirstClass?: boolean;
+  fake?: boolean;
 }
 
 export const ArgumentSlotPrefix = "argument slot of ";
@@ -18,6 +19,7 @@ export function ArgumentSlot({
   idSuffix,
   blockId,
   allowFirstClass = false,
+  fake = false,
 }: ArgumentSlotProps) {
   const { setNodeRef, isOver } = useDroppable({
     id: `${ArgumentSlotPrefix}${idSuffix}`,
@@ -28,7 +30,7 @@ export function ArgumentSlot({
   );
   return (
     <Box
-      {...ArgumentSlotStyles}
+      {...ArgumentSlotStyles(fake)}
       aria-label={BlockLabels.ArgumentSlot}
       ref={setNodeRef}
       {...(isOver

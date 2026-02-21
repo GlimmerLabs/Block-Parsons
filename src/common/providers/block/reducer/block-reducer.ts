@@ -15,19 +15,19 @@ import {
 
 export type BlockDispatchType =
   | {
-      type: "SET_PARENT";
-      payload: {
-        id: string;
-        parentId: string;
-        dndInfo: { active: Active | null; over: Over | null };
-      };
-    }
-  | {
-      type: "RESET";
-    }
-  | {
-      type: "CHECK";
+    type: "SET_PARENT";
+    payload: {
+      id: string;
+      parentId: string;
+      dndInfo: { active: Active | null; over: Over | null };
     };
+  }
+  | {
+    type: "RESET";
+  }
+  | {
+    type: "CHECK";
+  };
 
 export const blockReducer: ImmerReducer<BlockContextType, BlockDispatchType> = (
   draft: Draft<BlockContextType>,
@@ -54,18 +54,26 @@ export const blockReducer: ImmerReducer<BlockContextType, BlockDispatchType> = (
           solution: {
             ...current(draft).solution,
             isCorrect: false,
+            isComplete: false,
+            code: null,
+            errorMessage: conversionResult.message,
           },
         };
       }
       const { code: solutionCode } = conversionResult;
-      console.log(solutionCode);
 
+      const isCorrect = isEqual(current(draft).blocks, solutionBlocks);
+      if (!isCorrect) {
+        console.log(current(draft).blocks, solutionBlocks);
+      }
       return {
         ...draft,
         solution: {
           ...current(draft).solution,
-          isCorrect: isEqual(current(draft).blocks, solutionBlocks),
+          isCorrect,
+          isComplete: true,
           code: solutionCode,
+          errorMessage: isCorrect ? null : "The solution is incorrect. Try again!",
         },
       };
     }

@@ -9,6 +9,24 @@ import {
 } from "../../../block-types.ts";
 import { ArgumentSlotPrefix } from "../../../../components/block/slot/ArgumentSlot.tsx";
 
+function fixExpandableParentSlots(
+  originalIndex: number,
+  originalParentId: string,
+  blocks: Draft<BlockContextType["blocks"]>,
+) {
+  if (originalIndex === -1) return;
+  // moves out of expandable blocks may mess up slot indices
+  // get original parent block
+  const originalParentBlock = getOriginalParentBlock(originalParentId, blocks);
+  if (originalParentBlock.expandable) {
+    // fix holes in original parent slots
+    originalParentBlock.children = originalParentBlock.children.filter(
+      (slot) => slot.id !== null,
+    );
+  }
+  return;
+}
+
 export function handleSetParent(
   draft: Draft<BlockContextType>,
   action: BlockDispatchType,
@@ -54,6 +72,7 @@ export function handleSetParent(
     );
     // console.log("new top level", newTopLevel);
     draft.solution.topLevel = [...newTopLevel];
+    fixExpandableParentSlots(originalIndex, originalParentId, blocks);
     return;
   }
 
@@ -64,22 +83,54 @@ export function handleSetParent(
   if (!newParent || !parsedSlotIndex || !isBlockWithChildrenData(newParent)) {
     throw new Error("new parent not found or has no children?");
   }
-  const parentChildren = newParent.children;
-  const tempId = parentChildren[slotIndex].id;
+  const newChildren = newParent.children;
+  // undo swap into an slot if:
+  // - child isn't changing parents,
+  // - parent is expandable, and
+  // - the child is already in a lower indexed slot
+  if (
+    originalParentId === newParentId &&
+    newParent.expandable &&
+    originalIndex < slotIndex
+  ) {
+    // add back to original parent
+    const originalParentBlock = getOriginalParentBlock(
+      originalParentId,
+      blocks,
+    );
+    originalParentBlock.children[originalIndex].id = id;
+    return;
+  }
+  // fake slots may cause indexing past bounds
+  if (slotIndex >= newChildren.length && newParent.expandable) {
+    newChildren.push({
+      id: null,
+      locked: false,
+      allowFirstClass: false,
+    });
+  }
+  const tempId = newChildren[slotIndex].id;
+  // don't allow swap with original parent
   if (tempId === originalParentId) {
-    // don't allow swap with original parent
     // console.warn("ignoring attempted swap with original parent");
+    // add back to original parent
+    const originalParentBlock = getOriginalParentBlock(
+      originalParentId,
+      blocks,
+    );
+    originalParentBlock.children[originalIndex].id = id;
     return;
   }
   child.parentId = newParentId;
   // potential swap
-  parentChildren[slotIndex].id = id;
+  newChildren[slotIndex].id = id;
   if (!tempId) {
     // no swap required
     draft.solution.topLevel = updatedTopLevel;
+    fixExpandableParentSlots(originalIndex, originalParentId, blocks);
     return;
   }
-  // console.log("swapping", originalIndex);
+  // console.warn("potential swap");
   if (originalParentId === SectionTitles.SolutionBox) {
     // top level swap
     // console.warn("top level swap");
@@ -88,13 +139,30 @@ export function handleSetParent(
   } else if (originalIndex > -1) {
     // update ogChildBlocks
     // console.warn("updating old parent's children");
-    parentChildren[originalIndex].id = tempId;
+    const originalParentBlock =
+      blocks.get(originalParentId) ?? throwNull("original parent should exist");
+    if (!isBlockWithChildrenData(originalParentBlock)) {
+      throw new Error("original parent should have children");
+    }
+    originalParentBlock.children[originalIndex].id = tempId;
   }
   const swappedBlock =
     blocks.get(tempId) ?? throwNull(`temp block ${tempId} not found?`);
   swappedBlock.parentId = originalParentId;
 
   draft.solution.topLevel = updatedTopLevel;
+}
+
+function getOriginalParentBlock(
+  originalParentId: string,
+  blocks: Draft<BlockContextType["blocks"]>,
+) {
+  const parentBlock =
+    blocks.get(originalParentId) ?? throwNull("original parent should exist");
+  if (!isBlockWithChildrenData(parentBlock)) {
+    throw new Error("original parent should have children");
+  }
+  return parentBlock;
 }
 
 function removeChildFromParent(

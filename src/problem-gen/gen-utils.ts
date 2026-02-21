@@ -34,6 +34,7 @@ export function turnIntoBlock(
       type: "ConstantBlock",
       value: node.simplename,
       parentId: SectionTitles.SolutionBox,
+      isSymbol: node.value.includes("Symbol"),
     });
     return {
       id: blockId,
@@ -85,10 +86,21 @@ export function turnIntoBlock(
     blockChildren.push(childSlot);
   }
 
+  // TODO: find way to detect varargs, for now just check for list or + in first
+  const firstBlockData =
+    blockMap.get(
+      firstBlockSlot.id ?? throwNull("first block slot id is somehow null"),
+    ) ?? throwNull("first block data doesn't exist somehow");
+  const expandable =
+    (firstBlockSlot.locked ? !caretOperator : caretOperator) &&
+    firstBlockData.type === "ConstantBlock" &&
+    isExpandableSymbol(firstBlockData.value);
+
   blockMap.set(blockId, {
     type: "BlockWithChildren",
     parentId: SectionTitles.SolutionBox,
     children: blockChildren,
+    expandable,
   });
 
   return {
@@ -96,6 +108,11 @@ export function turnIntoBlock(
     locked: !caretOperator,
     allowFirstClass: false,
   };
+}
+
+function isExpandableSymbol(value: string) {
+  const expandableSymbols = ["list", "+"];
+  return expandableSymbols.includes(value);
 }
 
 const BacktickHandler: TokenHandler = {
@@ -206,7 +223,9 @@ export function convertBlocksToScamper(
     const childCode: string[] = [];
     let blocksEncountered = 1;
     for (const { id } of block.children) {
-      if (!id) return { type: "ConversionError", message: "null child id" };
+      if (!id) {
+        return { type: "ConversionError", message: "null child id" };
+      }
       const conversionResult = scamperifyBlock(
         blocks.get(id) ?? throwNull("child block id is not a real block?"),
       );

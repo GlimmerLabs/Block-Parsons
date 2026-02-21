@@ -2,16 +2,17 @@ import type { BlockData } from "../common/block-types.ts";
 import { parseTemplateSolution, turnIntoBlock } from "./gen-utils.ts";
 import { SectionTitles, throwNull } from "../common/utils.ts";
 
-export function generateSolutionFromScamper(src: string) {
+export function generateSolutionFromTemplate(src: string) {
   const { nodes: queue } = parseTemplateSolution(src);
 
-  // console.log(queue);
+  console.log(structuredClone(queue));
   const solutionMap = new Map<string, BlockData>();
 
   for (const node of queue) {
     turnIntoBlock(node, solutionMap);
   }
 
+  console.log(structuredClone(solutionMap));
   return solutionMap;
 }
 
@@ -39,6 +40,8 @@ export function generateInitialStateFromSolution(
       childSlot.id = null;
     }
   }
+
+  // console.log(structuredClone(blockMap));
 
   return blockMap;
 }

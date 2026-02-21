@@ -2,6 +2,7 @@ export interface Slot {
   id: string | null;
   locked: boolean;
   allowFirstClass: boolean;
+  fake?: boolean;
 }
 
 type BlockType = "ConstantBlock" | "BlockWithChildren";
@@ -14,6 +15,7 @@ interface BaseBlockData {
 export interface ConstantBlockData extends BaseBlockData {
   type: "ConstantBlock";
   value: string;
+  isSymbol?: boolean;
 }
 
 interface BlockWithChildrenData extends BaseBlockData {
@@ -37,7 +39,7 @@ export function canBeFirstClass(
 } {
   return (
     isBlockWithChildrenData(block) &&
-    block.children.length > 0 &&
+    block.children.length > 1 &&
     block.children.every(({ id }, index) =>
       index === 0 ? id !== null : id === null,
     )

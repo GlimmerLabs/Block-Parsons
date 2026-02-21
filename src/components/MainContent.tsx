@@ -3,7 +3,7 @@ import { TitledSection } from "./TitledSection.tsx";
 import { BlockLibrary } from "./block-library/BlockLibrary.tsx";
 import { SolutionBox } from "./solution-box/SolutionBox.tsx";
 import { SectionTitles } from "../common/utils.ts";
-import { Statistics } from "./Statistics.tsx";
+import { Tools } from "./tools/Tools.tsx";
 import { Attribution } from "./Attribution.tsx";
 
 export function MainContent() {
@@ -17,7 +17,7 @@ export function MainContent() {
           <SolutionBox />
         </TitledSection>
       </Stack>
-      <Statistics />
+      <Tools />
       <Attribution />
     </Stack>
   );
